@@ -1,0 +1,22 @@
+[
+  {
+    "id": "KB-AUDIO-01",
+    "title": "Entrega de áudio",
+    "text": "Para diagnosticar áudio que toca no navegador mas falha no WhatsApp, confira codec, contêiner, MIME type, duração e confirmação do provedor de envio. Reproduzir no PC não prova que o destinatário recebeu um arquivo compatível. Não marque como entregue sem evidência do provedor."
+  },
+  {
+    "id": "KB-ORDER-02",
+    "title": "Divergência de pedido",
+    "text": "Quando o pedido diverge entre sistemas, compare o identificador externo, o último evento confirmado, a versão do registro e o horário em cada origem. Uma atualização manual deve preservar trilha de auditoria e ter confirmação humana antes da execução."
+  },
+  {
+    "id": "KB-CUSTOMER-03",
+    "title": "Cadastro duplicado",
+    "text": "Antes de unir cadastros, normalize telefone e email, examine os vínculos de proposta e preserve os identificadores originais. Homônimos não são prova de duplicidade. Nunca apague histórico para esconder um cliente do painel."
+  },
+  {
+    "id": "KB-GENERAL-04",
+    "title": "Evidência insuficiente",
+    "text": "Sem um identificador verificável e logs do sistema de origem, a resposta deve separar fato observado de hipótese. Proponha um próximo diagnóstico, mas não afirme que o cliente recebeu uma mensagem ou que um pedido mudou de estado."
+  }
+]

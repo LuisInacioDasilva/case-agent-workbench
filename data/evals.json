@@ -1,0 +1,6 @@
+[
+  {"case": "O áudio abre no PC, mas o cliente não consegue reproduzir no WhatsApp.", "expected_category": "audio", "expected_citation": "KB-AUDIO-01"},
+  {"case": "O pedido no ERP aparece aprovado, mas no painel está pendente.", "expected_category": "order", "expected_citation": "KB-ORDER-02"},
+  {"case": "Dois cadastros parecem ser a mesma pessoa, mas têm propostas diferentes.", "expected_category": "customer", "expected_citation": "KB-CUSTOMER-03"},
+  {"case": "Não tenho logs nem número do caso. O que posso verificar?", "expected_category": "general", "expected_citation": "KB-GENERAL-04"}
+]
