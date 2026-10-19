@@ -1,3 +1,7 @@
+<p align="center"><img src="./assets/hero.svg" alt="CASE AGENT WORKBENCH: Análise assistida, evidência verificável e decisão humana." width="960"></p>
+
+<p align="center"><a href="#ver-funcionando-sem-pagar-nada">Demo local</a> · <a href="#fluxo">Fluxo</a> · <a href="#deploy-segurança-e-rollback">Limites de uso</a></p>
+
 # Case Agent Workbench
 
 Eu queria um exemplo de agente que tivesse trabalho de verdade, e não só dois prompts encadeados com uma resposta bonita. Aqui o caso passa por recuperação de conhecimento local, análise estruturada e revisão independente. A saída é um rascunho para uma pessoa decidir; a aplicação não envia mensagem, não altera pedido e não executa ferramenta com efeito externo.
@@ -50,3 +54,4 @@ O projeto foi desenhado para execução local, não para expor a internet. A fil
 
 <p align="center"><a href="https://github.com/LuisInacioDasilva"><img src="https://avatars.githubusercontent.com/u/88007376?v=4" width="82" height="82" alt="Foto de Luis da Silva" style="border-radius:50%"></a></p>
 <p align="center"><strong>Desenvolvido por Luis da Silva</strong><br>Back-end, dados, integrações e automação em produção.</p>
+
