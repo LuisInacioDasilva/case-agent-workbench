@@ -12,7 +12,7 @@ python -m app.evaluate
 python -m app.server
 ```
 
-Abra `http://127.0.0.1:8086`. Use os casos prontos ou escreva um caso **sintético**. A interface mostra categoria, resposta, fontes, trilha e a etapa de revisão humana. O servidor aceita conexões apenas em `127.0.0.1` e não persiste os casos.
+Abra `http://127.0.0.1:8086`. Use os casos prontos ou escreva um caso **sintético**. A interface mostra categoria, resposta, fontes, trilha e uma fila de revisão humana. O revisor informa nome e motivo para aprovar ou rejeitar um rascunho. Aprovar significa **somente liberar exibição local**; nenhuma mensagem é enviada. O servidor aceita conexões apenas em `127.0.0.1` e não persiste os casos.
 
 ## LLM local de verdade
 
@@ -34,14 +34,17 @@ O adaptador usa `POST http://127.0.0.1:11434/api/chat`, `stream: false` e schema
 2. O agente analista recebe caso e evidências e responde no schema de categoria, rascunho, citações e revisão humana obrigatória.
 3. O programa rejeita schema inválido, fonte inexistente, resposta vazia e tentativa de tirar a revisão humana.
 4. O agente revisor avalia o rascunho. Um veto bloqueia a saída. Aprovação libera **apenas exibição**, nunca execução.
+5. Um rascunho aprovado pelo agente entra na fila local para uma decisão humana explícita, com motivo obrigatório. Cada decisão é de uso único; duas decisões concorrentes não sobrescrevem uma à outra.
 
-O corpus e os casos de avaliação são sintéticos. `data/evals.json` torna o comportamento esperado verificável; `tests/` cobre os casos, injeção de instruções, citações falsas, veto, indisponibilidade do modelo, limites de entrada e API HTTP. Há limites claros: um modelo pode citar um documento verdadeiro e ainda interpretar mal o texto. Para uso real, eu acrescentaria um conjunto maior de avaliações humanas, métricas de falso positivo e um processo de revisão antes de integrar qualquer ação.
+A fila em memória tem limite de 100 itens e expira após uma hora. Ela guarda rascunho e IDs de evidência, **não** o texto original do caso. `GET /api/reviews` mostra pendências; `POST /api/reviews/{id}/decision` registra `approve` ou `reject` com `actor` e `reason`. Reiniciar o processo apaga a fila; isto é uma demonstração local, não um sistema de aprovação persistente ou autenticado.
+
+O corpus e os casos de avaliação são sintéticos. `data/evals.json` torna o comportamento esperado verificável; `tests/` cobre os casos, injeção de instruções, citações falsas, veto, indisponibilidade do modelo, limites de entrada, fila e API HTTP. Há limites claros: um modelo pode citar um documento verdadeiro e ainda interpretar mal o texto. Para uso real, eu acrescentaria um conjunto maior de avaliações humanas, métricas de falso positivo e um processo de revisão antes de integrar qualquer ação.
 
 `python -m app.evaluate` executa o corpus com o fluxo completo e gera `dist/evaluation.json`: taxa de aprovação e checks individuais de status, categoria, fonte e revisão humana. O relatório guarda somente o número do caso, sem copiar seu texto. `--mode ollama` permite rodar o mesmo conjunto contra um modelo local; não trato a taxa nesses poucos casos sintéticos como precisão de produção.
 
 ## Deploy, segurança e rollback
 
-O projeto foi desenhado para execução local, não para expor a internet. Se for integrado a um sistema real, primeiro introduza autenticação, isolamento por usuário, política de retenção e observabilidade sem conteúdo sensível; só depois ferramentas externas com permissões mínimas e aprovação por ação. Não há schema nem migração. Rollback é parar o servidor e voltar ao commit anterior; nenhum dado é modificado fora da memória do processo.
+O projeto foi desenhado para execução local, não para expor a internet. A fila de revisão não tem autenticação nem persistência: não a trate como auditoria durável. Se for integrada a um sistema real, primeiro introduza autenticação, isolamento por usuário, armazenamento auditável, política de retenção e observabilidade sem conteúdo sensível; só depois ferramentas externas com permissões mínimas e aprovação por ação. Não há schema nem migração. Rollback é parar o servidor e voltar ao commit anterior; nenhum dado é modificado fora da memória do processo.
 
 ---
 
