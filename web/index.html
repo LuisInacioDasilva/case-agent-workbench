@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Case Agent Workbench</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#e8f2ff;background:#070c16;color-scheme:dark}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#172f47 0,transparent 35%),#070c16;min-height:100vh}
+    main{max-width:1200px;margin:auto;padding:36px 24px 80px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .logo{letter-spacing:.15em;font-size:12px;font-weight:800;color:#6ce2d0}.badge{border:1px solid #306a63;background:#10342f;color:#77ecd0;padding:8px 13px;border-radius:100px;font-size:12px;font-weight:700}
+    h1{font-size:clamp(39px,5vw,67px);letter-spacing:-.055em;line-height:1.05;max-width:760px;margin:67px 0 14px}p{color:#9db2c9;line-height:1.6;max-width:710px}
+    .layout{display:grid;grid-template-columns:.92fr 1.08fr;gap:18px;margin-top:38px}.panel{border:1px solid #263b55;background:#101b2c;border-radius:18px;padding:25px;min-width:0}
+    h2{font-size:16px;margin:0 0 17px}.eyebrow{color:#74a7c4;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
+    textarea{width:100%;min-height:215px;resize:vertical;border:1px solid #314761;background:#0b1422;color:#f0f7ff;border-radius:12px;padding:16px;font:inherit;line-height:1.55;outline:none}
+    textarea:focus{border-color:#4ce0c8;box-shadow:0 0 0 3px #4ce0c822}button{cursor:pointer;font:inherit}
+    .submit{border:0;background:#51dcc5;color:#082320;border-radius:11px;padding:12px 19px;font-weight:800;margin-top:14px}.submit:disabled{opacity:.55;cursor:wait}
+    .samples{display:flex;gap:8px;flex-wrap:wrap;margin-top:19px}.sample{color:#a9c4df;background:#1a2a40;border:1px solid #344b67;border-radius:8px;padding:8px 11px;font-size:12px}
+    .small{font-size:12px;margin:18px 0 0}.result{min-height:316px}.empty{border:1px dashed #35506c;border-radius:13px;padding:28px;color:#7794b2;margin-top:20px}
+    .status{display:inline-block;padding:7px 11px;border-radius:100px;background:#513e21;color:#f7cc76;font-size:12px;font-weight:700}.status.blocked{background:#482632;color:#ff9eb4}
+    .answer{font-size:21px;line-height:1.45;color:#f1f8ff;margin:24px 0}.meta{color:#9bb2ca;font-size:13px;margin:12px 0}
+    .flow{display:flex;gap:9px;flex-wrap:wrap;margin-top:25px}.flow div{background:#1b2c41;border:1px solid #34536d;color:#a7d8e5;border-radius:8px;padding:9px 11px;font-size:11px}
+    .evidence{margin-top:24px;border-top:1px solid #263b55;padding-top:18px}.evidence p{margin:8px 0;font-size:12px}
+    @media(max-width:800px){.layout{grid-template-columns:1fr}h1{margin-top:43px}}
+  </style>
+</head>
+<body><main>
+  <header class="top"><div class="logo">CASE AGENT / WORKBENCH</div><span class="badge" id="mode">MODO LOCAL</span></header>
+  <h1>Do caso à evidência.<br>Sem pular etapas.</h1>
+  <p>Dois papéis de agente: um analisa o caso com documentos locais, o outro revisa o rascunho. O resultado ainda depende de uma pessoa. Nenhuma mensagem é enviada e nenhum sistema externo é alterado.</p>
+  <div class="layout">
+    <section class="panel"><div class="eyebrow">01 / entrada</div><h2>Descreva o caso</h2>
+      <textarea id="case" maxlength="5000" aria-label="Descrição do caso">O áudio abre no PC, mas o cliente não consegue reproduzir no WhatsApp.</textarea>
+      <button id="analyze" class="submit">Analisar caso →</button>
+      <div class="samples"><button class="sample" data-case="O áudio abre no PC, mas o cliente não consegue reproduzir no WhatsApp.">Áudio</button><button class="sample" data-case="O pedido no ERP aparece aprovado, mas no painel está pendente.">Pedido</button><button class="sample" data-case="Dois cadastros parecem ser a mesma pessoa, mas têm propostas diferentes.">Cadastro</button></div>
+      <p class="small">Use apenas dados sintéticos na demonstração. No modo Ollama, a inferência é enviada somente ao serviço local em 127.0.0.1.</p>
+    </section>
+    <section class="panel result"><div class="eyebrow">02 / revisão</div><h2>Resultado</h2><div id="output" class="empty">Execute uma análise para ver a trilha e as evidências recuperadas.</div></section>
+  </div>
+</main>
+<script src="/app.js"></script>
+</body></html>
