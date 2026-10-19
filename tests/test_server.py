@@ -37,6 +37,29 @@ class ServerTests(unittest.TestCase):
             result = json.load(response)
         self.assertEqual(result["status"], "review_required")
         self.assertEqual(result["mode"], "demo-deterministico")
+        self.assertIn("review_id", result)
+
+    def test_local_review_api_records_a_human_decision(self):
+        payload = json.dumps({"case": "O pedido no ERP diverge do painel."}).encode()
+        request = Request(self.base + "/api/analyze", data=payload, headers={"Content-Type": "application/json"})
+        with urlopen(request) as response:
+            ticket_id = json.load(response)["review_id"]
+
+        with urlopen(self.base + "/api/reviews") as response:
+            pending = json.load(response)["pending"]
+        self.assertIn(ticket_id, {item["id"] for item in pending})
+
+        body = json.dumps({"decision": "approve", "actor": "Luis", "reason": "Fontes conferidas"}).encode()
+        decision = Request(
+            self.base + f"/api/reviews/{ticket_id}/decision", data=body,
+            headers={"Content-Type": "application/json"},
+        )
+        with urlopen(decision) as response:
+            result = json.load(response)
+        self.assertEqual(result["status"], "approved_for_display")
+        with self.assertRaises(HTTPError) as error:
+            urlopen(decision)
+        self.assertEqual(error.exception.code, 409)
 
     def test_rejects_wrong_media_type_and_large_input(self):
         req = Request(self.base + "/api/analyze", data=b"{}", headers={"Content-Type": "text/plain"})

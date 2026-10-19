@@ -20,7 +20,12 @@
     .answer{font-size:21px;line-height:1.45;color:#f1f8ff;margin:24px 0}.meta{color:#9bb2ca;font-size:13px;margin:12px 0}
     .flow{display:flex;gap:9px;flex-wrap:wrap;margin-top:25px}.flow div{background:#1b2c41;border:1px solid #34536d;color:#a7d8e5;border-radius:8px;padding:9px 11px;font-size:11px}
     .evidence{margin-top:24px;border-top:1px solid #263b55;padding-top:18px}.evidence p{margin:8px 0;font-size:12px}
-    @media(max-width:800px){.layout{grid-template-columns:1fr}h1{margin-top:43px}}
+    .review-queue{margin-top:18px}.review-fields{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin:18px 0}
+    .review-fields input{width:100%;border:1px solid #314761;background:#0b1422;color:#f0f7ff;border-radius:9px;padding:12px;font:inherit}
+    .ticket{border-top:1px solid #263b55;padding:17px 0}.ticket:first-child{border-top:0}.ticket strong{display:block;margin-bottom:7px}
+    .ticket-actions{display:flex;gap:8px;margin-top:12px}.ticket-actions button{background:#1a3540;color:#8af0da;border:1px solid #367d70;border-radius:8px;padding:8px 12px}
+    .ticket-actions .reject{background:#392332;color:#ffadbd;border-color:#744254}
+    @media(max-width:800px){.layout,.review-fields{grid-template-columns:1fr}h1{margin-top:43px}}
   </style>
 </head>
 <body><main>
@@ -36,6 +41,11 @@
     </section>
     <section class="panel result"><div class="eyebrow">02 / revisão</div><h2>Resultado</h2><div id="output" class="empty">Execute uma análise para ver a trilha e as evidências recuperadas.</div></section>
   </div>
+  <section class="panel review-queue"><div class="eyebrow">03 / decisão humana local</div><h2>Fila de revisão</h2>
+    <p>Uma aprovação libera apenas a exibição do rascunho neste laboratório. Ela não envia mensagens nem executa alterações. Os itens ficam somente na memória por até uma hora.</p>
+    <div class="review-fields"><input id="actor" maxlength="80" aria-label="Nome do revisor" placeholder="Nome do revisor"><input id="reason" maxlength="300" aria-label="Motivo da decisão" placeholder="Motivo da decisão (obrigatório)"></div>
+    <div id="queue" class="meta">Carregando revisões pendentes…</div>
+  </section>
   <footer style="display:flex;align-items:center;gap:13px;margin-top:42px;padding-top:22px;border-top:1px solid #263b55;color:#9db2c9;font-size:13px"><img src="https://avatars.githubusercontent.com/u/88007376?v=4" alt="Foto de Luis da Silva" width="44" height="44" style="border-radius:50%;object-fit:cover"><span>Desenvolvido por <a href="https://github.com/LuisInacioDasilva" style="color:#6ce2d0">Luis da Silva</a> · Back-end, dados e IA aplicada.</span></footer>
 </main>
 <script src="/app.js"></script>
